@@ -11,16 +11,14 @@ namespace AirfoilGeneratorGUI.Views.Plot
 {
     public class PlotViewModel : BindableBase
     {
-        private readonly IEventAggregator eventAggregator;
         private PlotModel plotModel;
 
         public PlotViewModel(IEventAggregator eventAggregator)
         {
             if(eventAggregator == null)
                 throw new ArgumentNullException(nameof(eventAggregator));
-
-            this.eventAggregator = eventAggregator;
-            this.eventAggregator.GetEvent<UpdateEvent>().Subscribe(this.OnNewResultsAvailable);
+            
+            eventAggregator.GetEvent<UpdateEvent>().Subscribe(this.OnNewResultsAvailable);
         }
 
         /// <summary>

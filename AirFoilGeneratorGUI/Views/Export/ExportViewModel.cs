@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Navigation;
 using AirfoilGeneratorGUI.Views.Settings;
 using NACAAirFoilGenerator;
 using NACAAirFoilGenerator.Data;
@@ -15,8 +14,6 @@ namespace AirfoilGeneratorGUI.Views.Export
 {
     public class ExportViewModel : BindableBase
     {
-        private readonly IEventAggregator eventAggregator;
-
         private string error = "";
         private bool includeThirdCoordinate = true;
         private string outputPath = "";
@@ -31,9 +28,8 @@ namespace AirfoilGeneratorGUI.Views.Export
         {
             if(eventAggregator == null)
                 throw new ArgumentNullException(nameof(eventAggregator));
-
-            this.eventAggregator = eventAggregator;
-            this.eventAggregator.GetEvent<UpdateEvent>().Subscribe(this.OnNewResultsAvailable);
+            
+            eventAggregator.GetEvent<UpdateEvent>().Subscribe(this.OnNewResultsAvailable);
 
             this.ExportCommand = new DelegateCommand(this.ExportCommand_Execute, this.ExportCommand_CanExecute);
         }
@@ -100,7 +96,7 @@ namespace AirfoilGeneratorGUI.Views.Export
             }
         }
 
-        private async Task ResetSuccessMessage()
+        private async void ResetSuccessMessage()
         {
             await Task.Delay(TimeSpan.FromSeconds(5));
             this.Success = "";

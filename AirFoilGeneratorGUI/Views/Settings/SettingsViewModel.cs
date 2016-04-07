@@ -4,7 +4,6 @@ using NACAAirFoilGenerator.Data;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using Prism.Regions;
 
 namespace AirfoilGeneratorGUI.Views.Settings
 {

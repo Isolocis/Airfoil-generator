@@ -1,6 +1,4 @@
-﻿using System;
-using AirfoilGeneratorGUI.Views.Settings;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using Prism.Regions;
 
 namespace AirfoilGeneratorGUI.Views.Overview
