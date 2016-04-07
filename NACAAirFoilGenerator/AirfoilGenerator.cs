@@ -26,13 +26,27 @@ namespace NACAAirFoilGenerator
             {
                 throw new InvalidAirfoilDataException(error);
             }
+
+            if (inputData.Designation.Length == 4)
+                return GenerateFourDigitAirfoilData(inputData);
+
+            throw new InvalidAirfoilDataException("Only 4 digit airfoils are supported at this time.");
+        }
+
+        /// <summary>
+        /// Generates NACA 4 digit airfoil data from the given input data.
+        /// </summary>
+        /// <param name="inputData">The data to process.</param>
+        /// <returns>Generated coordinates for the given airfoil specification.</returns>
+        public static AirfoilOutputData GenerateFourDigitAirfoilData(AirfoilInputData inputData)
+        {
             maxCamber = inputData.MaxCamber;
             maxCamberPosition = inputData.MaxCamberPosition;
             thickness = inputData.Thickness;
             closeTrailingEdge = inputData.CloseTrailingEdge;
 
             a4 = inputData.CloseTrailingEdge ? NACAFourDigitConstants.a4ClosedTrailingEdge : NACAFourDigitConstants.a4OpenTrailingEdge;
-            
+
             // Generate the x coordinates
             GenerateX(inputData.UseHalfCosineSpacing, inputData.NodesPerSide);
 

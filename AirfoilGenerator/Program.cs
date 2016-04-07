@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NACAAirFoilGenerator;
 using NACAAirFoilGenerator.Data;
 
@@ -14,7 +15,7 @@ namespace AirfoilGeneratorConsole
             inputData.Designation = Console.ReadLine();
 
             Console.Write("Number of nodes per side: ");
-            inputData.NodesPerSide = int.Parse(Console.ReadLine());
+            inputData.NodesPerSide = int.Parse(Console.ReadLine() ?? "0");
 
             Console.Write("Close trailing edge (y/n): ");
             inputData.CloseTrailingEdge = Console.ReadKey().Key == ConsoleKey.Y;
@@ -24,14 +25,17 @@ namespace AirfoilGeneratorConsole
             inputData.UseHalfCosineSpacing = Console.ReadKey().Key == ConsoleKey.Y;
             Console.Write(Environment.NewLine);
 
+            var data = AirfoilGenerator.GenerateAirfoilData(inputData);
+
             Console.Write("Include 3rd coordinate (y/n): ");
             var includeThirdCoordinate = Console.ReadKey().Key == ConsoleKey.Y;
             Console.Write(Environment.NewLine);
 
             Console.Write("Output directory: ");
             var outputFileDirectory = Console.ReadLine();
+            var outputPath = $"{Path.Combine(outputFileDirectory, data.FullDesignation)}.dat";
 
-            var outputPath = AirfoilGenerator.GenerateAirfoilData(inputData);
+            AirfoilGenerator.WriteOutputFile(data, outputPath, includeThirdCoordinate);
             Console.WriteLine($"Results written to {outputPath}");
             Console.Read();
         }

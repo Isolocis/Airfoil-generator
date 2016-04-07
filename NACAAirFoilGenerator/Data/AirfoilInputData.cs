@@ -59,9 +59,6 @@ namespace NACAAirFoilGenerator.Data
         /// </summary>
         private void InterpretDesignation()
         {
-            if (this.Designation.Length != 4)
-                throw new InvalidAirfoilDataException("Only 4-digit NACA airfoils are supported.");
-
             if (!double.TryParse(this.Designation.Substring(0, 1), out this.maxCamber))
             {
                 throw new InvalidAirfoilDataException($"Error parsing designation, could not convert the first digit: {this.Designation.Substring(0, 1)}");
