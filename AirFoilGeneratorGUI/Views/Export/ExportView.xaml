@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="AirfoilGeneratorGUI.Views.Export.ExportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AirfoilGeneratorGUI.Views.Export"
+             xmlns:prism="http://prismlibrary.com/"
+             mc:Ignorable="d" 
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance d:Type=local:ExportViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Path: " />
+        <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding OutputPath}" IsEnabled="{Binding ResultsAvailable}" />
+        <Button Grid.Column="2" Grid.Row="1" Content="Change" Click="ButtonBase_OnClick" IsEnabled="{Binding ResultsAvailable}" HorizontalAlignment="Right"/>
+        
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Include third coordinate: " />
+        <CheckBox Grid.Column="1" Grid.Row="2" IsChecked="{Binding IncludeThirdCoordinate}" IsEnabled="{Binding ResultsAvailable}" HorizontalAlignment="Left" />
+        
+        <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Text="{Binding Error}" Foreground="Red">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Error.Length}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Text="{Binding Success}" Foreground="Green">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Success.Length}" Value="0">
+                            <Setter Property="Visibility" Value="Hidden"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <Button Grid.Column="2" Grid.Row="5" Content="Export" Command="{Binding ExportCommand}" />
+        
+    </Grid>
+</UserControl>
