@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using NACAAirFoilGenerator.Data;
@@ -203,26 +204,26 @@ namespace NACAAirFoilGenerator
         {
             using (var writer = new StreamWriter(filePath, false))
             {
-                writer.WriteLine($"{x.Length} 2");
+                writer.WriteLine(string.Format(CultureInfo.InvariantCulture, $"{x.Length} 2"));
 
-                for (int i = 0; i < data.NodesPerSide; i++)
+                for (var i = 0; i < data.NodesPerSide; i++)
                 {
-                    writer.Write($" {data.XUpper[i]} {data.YUpper[i]}");
+                    writer.Write(string.Format(CultureInfo.InvariantCulture, $" {data.XUpper[i]} {data.YUpper[i]}"));
 
                     if(includeThirdCoordinate)
-                        writer.Write(" 0");
+                        writer.Write(string.Format(CultureInfo.InvariantCulture, " 0"));
 
-                    writer.Write(Environment.NewLine);
+                    writer.Write(string.Format(CultureInfo.InvariantCulture, Environment.NewLine));
                 }
 
-                for (int i = 0; i < data.NodesPerSide; i++)
+                for (var i = 0; i < data.NodesPerSide; i++)
                 {
-                    writer.Write($" {data.XLower[i]} {data.YLower[i]}");
+                    writer.Write(string.Format(CultureInfo.InvariantCulture, $" {data.XLower[i]} {data.YLower[i]}"));
 
                     if (includeThirdCoordinate)
-                        writer.Write(" 0");
+                        writer.Write(string.Format(CultureInfo.InvariantCulture, " 0"));
 
-                    writer.Write(Environment.NewLine);
+                    writer.Write(string.Format(CultureInfo.InvariantCulture, Environment.NewLine));
                 }
             }
         }
